@@ -63,22 +63,35 @@ public class JSONsParser {
         List<String> fulldatalist = new ArrayList<>();
         JsonNode rawdata = new ObjectMapper().readTree(data).get("list");
 
+        String ftimess;
+        String stimess;
+        int time = LocalTime.now().getHour();
+        String times;
         if (type.equals("now")) {
-            int time = LocalTime.now().getHour();
-            String times = time + ":" + "00";
-            String ftimes = time + 1 + ":" + "00";
-            String stimes = time - 1 + ":" + "00";
+            if (time < 10) {
+                times = "0" + time + ":" + "00";
+                int ftimes = time + 1;
+                int stimes = time - 1;
+                ftimess = "0" + ftimes + ":" + "00";
+                stimess = "0" + stimes + ":" + "00";
+            }else{
+                times = time + ":" + "00";
+                int ftimes = time + 1;
+                int stimes = time - 1;
+                ftimess = "0" + ftimes + ":" + "00";
+                stimess = "0" + stimes + ":" + "00";
+            }
             for (JsonNode one_object : rawdata) {
                 String forecastTime = one_object.get("dt_txt").toString();
-                if (forecastTime.contains(times) || forecastTime.contains(stimes) || forecastTime.contains(ftimes)) {
+                if (forecastTime.contains(times) || forecastTime.contains(ftimess) || forecastTime.contains(stimess)) {
                     fulldatalist.add(one_object.toString());
                 }
             }
-        }
-        if (type.equals("today")){
+        } else if (type.equals("today")){
             for (JsonNode one_object : rawdata) {
                 fulldatalist.add(one_object.toString());
             }
+
         }
         return fulldatalist;
     }
@@ -112,9 +125,9 @@ public class JSONsParser {
         String formattedTemperature;
         long roundedTemperature = Math.round(temperature);
         if (roundedTemperature > 0) {
-            formattedTemperature = "+" + Math.round(temperature);
+            formattedTemperature = "+" + Math.round(temperature) + "°C";
         } else {
-            formattedTemperature = String.valueOf(Math.round(temperature));
+            formattedTemperature = String.valueOf(Math.round(temperature)) + "°C";
         }
 
         String formattedDescription = description.replaceAll("\"", "");
