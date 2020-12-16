@@ -69,17 +69,17 @@ public class JSONsParser {
         String times;
         if (type.equals("now")) {
             if (time < 10) {
-                times = "0" + time + ":" + "00";
+                times = "0" + time + ":" + "00" + ":" + "00";
                 int ftimes = time + 1;
                 int stimes = time - 1;
-                ftimess = "0" + ftimes + ":" + "00";
-                stimess = "0" + stimes + ":" + "00";
+                ftimess = "0" + ftimes + ":" + "00" + ":" + "00";
+                stimess = "0" + stimes + ":" + "00" + ":" + "00";
             }else{
-                times = time + ":" + "00";
+                times = time + ":" + "00" + ":" + "00";
                 int ftimes = time + 1;
                 int stimes = time - 1;
-                ftimess = "0" + ftimes + ":" + "00";
-                stimess = "0" + stimes + ":" + "00";
+                ftimess = ftimes + ":" + "00" + ":" + "00";
+                stimess = stimes + ":" + "00" + ":" + "00";
             }
             for (JsonNode one_object : rawdata) {
                 String forecastTime = one_object.get("dt_txt").toString();
