@@ -1,7 +1,6 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -103,15 +102,11 @@ public class JSONsParser {
             String date;
             JsonNode mainNode;
             JsonNode weatherNode;
-            try {
-                mainNode = mapper.readTree(line).get("main");
-                weatherNode = mapper.readTree(line).get("weather");
-                for (JsonNode one_Node : weatherNode) {
-                    date = mapper.readTree(line).get("dt_txt").toString();
-                    sb.append(formatForecastData(date, one_Node.get("description").toString(), mainNode.get("temp").asDouble()));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            mainNode = mapper.readTree(line).get("main");
+            weatherNode = mapper.readTree(line).get("weather");
+            for (JsonNode one_Node : weatherNode) {
+                date = mapper.readTree(line).get("dt_txt").toString();
+                sb.append(formatForecastData(date, one_Node.get("description").toString(), mainNode.get("temp").asDouble()));
             }
         }
         return sb.toString();
@@ -126,7 +121,7 @@ public class JSONsParser {
         if (roundedTemperature > 0) {
             formattedTemperature = "+" + Math.round(temperature) + "°C";
         } else {
-            formattedTemperature = String.valueOf(Math.round(temperature)) + "°C";
+            formattedTemperature = Math.round(temperature) + "°C";
         }
 
         String formattedDescription = description.replaceAll("\"", "");
