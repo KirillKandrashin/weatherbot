@@ -40,7 +40,6 @@ public class JSONsParser {
 
         HttpURLConnection connection = (HttpURLConnection) urlOb.openConnection();
         connection.setRequestMethod("GET");
-        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 
         int responseCode = connection.getResponseCode();  //если 200 - все ок
         if (responseCode == 404) {
