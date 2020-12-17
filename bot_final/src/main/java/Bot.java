@@ -1,6 +1,5 @@
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
-import org.telegram.abilitybots.api.objects.MessageContext;
 
 import static org.telegram.abilitybots.api.objects.Flag.TEXT;
 import static org.telegram.abilitybots.api.objects.Locality.ALL;
@@ -37,7 +36,7 @@ public class Bot extends AbilityBot {
                 .privacy(PUBLIC)
                 .locality(ALL)
                 .input(0)
-                .action((MessageContext ctx) -> silent.send(BotsParser.FormingAns(ctx.firstArg(), ctx.secondArg()), ctx.chatId()))
+                .action(ctx -> silent.send(BotsParser.FormingAns(ctx.firstArg(), ctx.secondArg()), ctx.chatId()))
                 .build();
     }
 
